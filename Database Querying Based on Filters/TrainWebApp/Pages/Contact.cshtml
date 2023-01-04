@@ -1,0 +1,39 @@
+﻿@page
+@model TrainWebApp.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact Info";
+}
+
+<form method="post">
+
+    <label>
+    User Email <input type="email" asp-for="Email">
+    </label>
+
+    <label>
+        Subject/Topic
+        <select asp-for="Topic">
+            <option value="">Select...</option>
+            <option value="0">Contributing</option>
+            <option value="1">Request Membership</option>
+            <option value="2">Bug Report</option>
+        </select>
+    </label>
+
+    <label>
+        Message Title
+        <input type="text" asp-for="MessageTitle">
+    </label>
+
+    <label>
+        Message Body
+        <textarea asp-for="MessageBody" rows="7" cols"150"></textarea>
+    </label>
+
+    <button type="submit" value="somevalue" id="jsName" name="RequestObject">
+        Send
+    </button>
+</form>
+
+        <p>@Model.Feedback</p>
+

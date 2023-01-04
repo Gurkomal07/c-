@@ -1,0 +1,20 @@
+﻿@page
+@model TrainWebApp.Pages.AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+
+@if (Model.dbVersionInformation == null)
+{
+    <p>Did not got version and date of release"</p>
+}
+else
+{
+    <p> 
+        TrainWatch Version: @Model.dbVersionInformation.Major .
+                            @Model.dbVersionInformation.Minor .
+                             @Model.dbVersionInformation.Build
+         Released:  @Model.dbVersionInformation.ReleaseDate.ToShortDateString()
+    </p>
+}

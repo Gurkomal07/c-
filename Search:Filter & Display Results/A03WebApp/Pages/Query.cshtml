@@ -1,0 +1,90 @@
+﻿@page "{partialProgramName?}"
+@model A03WebApp.Pages.QueryModel
+@{
+    ViewData["Title"] = "Query";
+}
+
+<h1>Query Page</h1>
+
+
+<form method="post">
+    <label>
+        Enter a program name(or part of)
+        <input type="text" asp-for="partialProgramName"
+            placeholder="enter your description"/>
+    </label>
+
+        <button type="submit" asp-page-handler="Search">Search</button>&nbsp;&nbsp;
+
+    <br/>
+    @if (Model.ProgramsList != null  && Model.partialProgramName != null)
+    {
+        if (Model.ProgramsList.Count == 0)
+        {
+            <p style="color:blueviolet; font-weight:bold; font-size:large;">
+                There are no programs matching your search request.
+            </p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Program</th>
+                        <th>Diploma</th>
+                        <th>School</th>
+                        <th>Tution</th>
+                        <th>International</th>
+                    </tr>
+                </thead>
+                <tbody>
+               
+                    @foreach (var item in Model.ProgramsList)
+                    {
+                        <tr>
+                            <td><a href="/CRUD/@item.ProgramID">Edit</a> </td>                           
+                            <td>@item.ProgramName</td>
+                            <td>@item.DiplomaName</td>
+                            <td>
+                                <select>
+                                @foreach(var schools in Model.SchoolsList)
+                                {
+                                        <option value="">@schools.SchoolName</option>
+                                }
+                                </select>
+                            </td>
+                            <td>@item.Tuition.ToString("0.00")</td>
+                            <td>@item.InternationalTuition.ToString("0.00")</td>
+                        </tr>
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            @{
+                                foreach (var pageRef in Model.Pager)
+                                {
+                                    if (pageRef == Model.Pager.CurrentPage)
+                                    {
+                                        <strong>@pageRef.Text</strong>
+                                    }
+                                    else
+                                    {
+                                        <a title="Page @pageRef.Page"
+                                        asp-asp-page="/Query"
+                                        asp-route-currentPage="@pageRef.Page">
+                                        @pageRef.Text
+                                        </a>
+                                    }
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+
+</form>
